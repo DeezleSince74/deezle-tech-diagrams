@@ -1,0 +1,17 @@
+{
+  "name": "deezle-tech-diagrams",
+  "owner": {
+    "name": "deezlesince74"
+  },
+  "metadata": {
+    "description": "Deezle Tech Diagrams: draw Mermaid diagrams on a Claude Whiteboard."
+  },
+  "plugins": [
+    {
+      "name": "deezle-tech-diagrams",
+      "source": "./plugin",
+      "description": "Draw cloud architecture (open icons, plus official AWS, Azure and Google Cloud icons you import), data models, flowcharts and state machines on a Claude Whiteboard. Skills only: no server, no code.",
+      "license": "MIT"
+    }
+  ]
+}

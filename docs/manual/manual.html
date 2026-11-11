@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Deezle Tech Diagrams — User Manual</title>
+<meta name="author" content="Made With Deezle">
+<meta name="description" content="User manual for Deezle Tech Diagrams 0.2.1, a Claude plugin that draws diagrams on a Claude Whiteboard.">
+<style>
+@font-face { font-family: "Archivo"; src: url("fonts/archivo-latin.woff2") format("woff2"); font-weight: 400 700; font-stretch: 62% 125%; }
+@font-face { font-family: "Plex Mono"; src: url("fonts/plexmono-400-latin.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Plex Mono"; src: url("fonts/plexmono-500-latin.woff2") format("woff2"); font-weight: 500; }
+
+:root {
+  --ink: #16120e;
+  --ink-2: #4a4f50;
+  --ink-3: #6b7273;
+  --paper: #ffffff;
+  --panel: #f5f4f0;
+  --rule: #dedbd2;
+  --night: #0b0d0d;
+  --night-ink: #f2f4f3;
+  --amber: #ffc400;
+  --sans: "Archivo", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+@page { size: Letter; margin: 0.8in 0.85in 0.85in; }
+@page :first { margin: 0; }
+@page { @bottom-left { content: "Deezle Tech Diagrams · User Manual"; font: 500 7.5pt var(--mono); color: #6b7273; letter-spacing: .06em; text-transform: uppercase; }
+        @bottom-right { content: counter(page); font: 500 8pt var(--mono); color: #6b7273; } }
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 10.5pt/1.55 var(--sans); }
+
+/* ---------- Cover ---------- */
+.cover { height: 11in; background: var(--night); color: var(--night-ink); padding: 0.9in 0.85in; display: flex; flex-direction: column; page-break-after: always; }
+.cover .brand { font: 500 8.5pt var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #b7bfc0; display: flex; align-items: center; gap: 10px; }
+.cover .brand svg { width: 18px; height: 22px; color: var(--amber); }
+.cover h1 { font-size: 46pt; line-height: 1.02; font-weight: 700; font-stretch: 88%; margin: 1.1in 0 0; letter-spacing: -.01em; }
+.cover h1 .mark { background: linear-gradient(transparent 62%, var(--amber) 62%, var(--amber) 90%, transparent 90%); color: var(--night-ink); }
+.cover .sub { font-size: 15pt; color: #b7bfc0; margin: 18px 0 0; max-width: 5.4in; line-height: 1.4; }
+.cover .shot { margin-top: auto; border-radius: 10px; overflow: hidden; border: 1px solid #2a3032; }
+.cover .shot img { display: block; width: 100%; height: auto; }
+.cover .meta { margin-top: 22px; display: flex; justify-content: space-between; font: 500 8pt var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #949c9e; }
+.cover .meta b { color: var(--amber); font-weight: 500; }
+
+/* ---------- Body ---------- */
+.label { font: 500 7.5pt var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+section.chapter { page-break-before: always; }
+section.chapter:first-of-type { page-break-before: auto; }
+.chapter > .label { display: flex; align-items: center; gap: 10px; }
+.chapter > .label .num { background: var(--amber); color: var(--ink); padding: 2px 6px; border-radius: 3px; }
+h2 { font-size: 22pt; line-height: 1.15; font-weight: 700; font-stretch: 92%; margin: 8px 0 14px; letter-spacing: -.005em; }
+h3 { font-size: 12.5pt; font-weight: 700; margin: 20px 0 6px; break-after: avoid; }
+p { margin: 0 0 9px; }
+.lede { font-size: 12pt; color: var(--ink-2); max-width: 6in; }
+ul, ol { margin: 0 0 10px; padding-left: 20px; }
+li { margin: 0 0 5px; }
+li::marker { color: var(--ink-3); }
+code, kbd { font: 400 9pt var(--mono); background: var(--panel); border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; }
+pre { font: 400 8.6pt/1.5 var(--mono); background: var(--panel); border: 1px solid var(--rule); border-left: 3px solid var(--amber); border-radius: 4px; padding: 10px 12px; margin: 6px 0 12px; white-space: pre-wrap; break-inside: avoid; }
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+figure { margin: 10px 0 16px; break-inside: avoid; }
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; }
+figure.narrow { width: 100%; }
+.two figure { margin-top: 4px; }
+figcaption { margin-top: 6px; font: 500 7.5pt var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 9.6pt; break-inside: avoid; }
+th { text-align: left; font: 500 7.5pt var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1.5px solid var(--ink); padding: 6px 8px 6px 0; }
+td { border-bottom: 1px solid var(--rule); padding: 7px 8px 7px 0; vertical-align: top; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.note { background: var(--panel); border-left: 3px solid var(--amber); border-radius: 0 4px 4px 0; padding: 10px 14px; margin: 10px 0 14px; break-inside: avoid; }
+.note .label { display: block; margin-bottom: 3px; color: var(--ink-2); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.prompt { font-style: italic; }
+.toc { list-style: none; padding: 0; margin: 18px 0 0; counter-reset: c; }
+.toc li { display: flex; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 11.5pt; }
+.toc li span:first-child { font: 500 9pt var(--mono); color: var(--ink-3); width: 24px; padding-top: 2px; }
+.toc li em { margin-left: auto; font-style: normal; color: var(--ink-3); font-size: 9.5pt; }
+.end { margin-top: 28px; padding-top: 14px; border-top: 1.5px solid var(--ink); font-size: 9.5pt; color: var(--ink-2); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="brand">
+    <svg viewBox="30 4 60 104" fill="currentColor" aria-hidden="true"><path d="M72 8 H86 V106 H72 Z"/><path d="M79 82 L36.868 60.602 A24 24 0 1 0 36.868 103.398 Z"/></svg>
+    Made With Deezle
+  </div>
+  <h1>Deezle Whiteboard <span class="mark">Diagrams</span></h1>
+  <p class="sub">Describe a system to Claude. Get a diagram on a whiteboard your team can share, comment on and edit.</p>
+  <div class="shot"><img src="images/cards.png" width="1671" height="796" alt="Three rows of cloud service cards on a whiteboard: AWS, Azure and Google Cloud"></div>
+  <div class="meta"><span>User manual · <b>Version 0.2.1</b></span><span>madewithdeezle.com</span></div>
+</div>
+
+<!-- ============ CONTENTS ============ -->
+<section class="chapter">
+  <p class="label">Contents</p>
+  <h2>What's inside</h2>
+  <ol class="toc">
+    <li><span>01</span>What it is and what you need</li>
+    <li><span>02</span>Install it</li>
+    <li><span>03</span>Your first board</li>
+    <li><span>04</span>The kinds of diagram</li>
+    <li><span>05</span>Card style and official icons</li>
+    <li><span>06</span>Diagrams from your cloud code</li>
+    <li><span>07</span>Working with a board</li>
+    <li><span>08</span>Privacy and safety</li>
+    <li><span>09</span>Troubleshooting</li>
+    <li><span>10</span>Icons, licenses and help</li>
+  </ol>
+</section>
+
+<!-- ============ 01 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">01</span>Start here</p>
+  <h2>What it is and what you need</h2>
+  <p class="lede">Deezle Tech Diagrams is a plugin for Claude. You describe a system, and Claude draws it on a Claude Whiteboard: a shared board where everything stays a box, line or note that people can move.</p>
+
+  <p>Behind the scenes, Claude plans the diagram in <b>Mermaid</b>, a short text format for diagrams. The plugin teaches Claude how each Mermaid part becomes a board element, how to lay the parts out neatly, and where to find icons. You never have to learn Mermaid.</p>
+
+  <h3>What you get</h3>
+  <ul>
+    <li><b>Four kinds of diagram:</b> cloud architecture, data models, flowcharts and state machines.</li>
+    <li><b>Diagrams from cloud code:</b> Claude can read Terraform, Pulumi, Bicep or CloudFormation files and draw what they build.</li>
+    <li><b>About 150 open icons</b> built in, plus the official Amazon Web Services (AWS), Microsoft Azure and Google Cloud icons if you choose to import them.</li>
+    <li><b>A board, not a picture:</b> share it, comment on it and edit it with your team.</li>
+  </ul>
+
+  <h3>What you need</h3>
+  <table>
+    <tr><th>Item</th><th>Details</th></tr>
+    <tr><td>Claude plan</td><td>A paid plan with Whiteboards turned on. Whiteboards is in beta. It's on by default for Team plans and off by default for Enterprise plans, where an admin turns it on under Organization settings &gt; Artifacts.</td></tr>
+    <tr><td>Claude app</td><td>Claude Code 2.1.275 or later, or Cowork.</td></tr>
+    <tr><td>Anything else?</td><td>No. The plugin is instructions plus icons. It runs no server and installs no code.</td></tr>
+  </table>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">02</span>Setup</p>
+  <h2>Install it</h2>
+  <p class="lede">Install takes one command.</p>
+
+  <h3>From Claude Code</h3>
+  <p>Type this into Claude Code:</p>
+<pre><code>/plugin install deezle-tech-diagrams --marketplace DeezleSince74/deezle-tech-diagrams</code></pre>
+
+  <div class="note"><span class="label">Early access</span>The plugin's repository is private for now, so this command works only for people who have been given access to it.</div>
+
+  <h3>Check that it works</h3>
+  <p>Ask Claude: <span class="prompt">"Draw a web app with a database on a whiteboard."</span> Claude creates a new board and draws on it. If it can't, see chapter 09.</p>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">03</span>Quick start</p>
+  <h2>Your first board</h2>
+  <p class="lede">Ask for a whiteboard and say what goes on it. Name the parts and how they connect.</p>
+
+  <h3>Prompts to try</h3>
+  <ol>
+    <li class="prompt">"Draw a 3-tier AWS web app with a VPC on a whiteboard."</li>
+    <li class="prompt">"Put this Mermaid on a whiteboard:" followed by a flowchart, ER diagram, state diagram or architecture diagram.</li>
+    <li class="prompt">"Diagram this Terraform state as a whiteboard."</li>
+    <li class="prompt">"Draw the states of a support ticket from open to closed, on a whiteboard."</li>
+  </ol>
+
+  <figure style="width:62%"><img src="images/icons.png" width="1256" height="1126" alt="A whiteboard titled AWS web app: a CDN feeds a load balancer in a public subnet, which feeds a web tier and database in a private subnet"><figcaption>A first board: an AWS web app inside a VPC (virtual private cloud)</figcaption></figure>
+
+  <h3>Tips for better boards</h3>
+  <ul>
+    <li><b>Name real services.</b> "Azure Functions" gets the right icon. "a serverless thing" gets a plain box.</li>
+    <li><b>Say the direction.</b> "The API writes to the queue" gives a clearer arrow than "they're connected."</li>
+    <li><b>Keep it to about 25 boxes.</b> Bigger systems read better split across two boards. Claude offers a second board for the detail.</li>
+  </ul>
+</section>
+
+<!-- ============ 04 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">04</span>Diagram types</p>
+  <h2>The kinds of diagram</h2>
+  <p class="lede">Claude picks the right kind from what you ask for. You can also name it: "as a flowchart," "as an ER diagram."</p>
+
+  <h3>Flowchart</h3>
+  <p>Shows steps and decisions. Diamonds ask a question, and each answer gets its own labeled arrow. The main path runs along the top row. Dashed arrows mark a retry or an optional step.</p>
+  <figure><img src="images/flowchart.png" width="2251" height="1517" alt="Flowchart of a CI/CD pipeline: push, lint, tests, a decision, then build, store, deploy and a smoke-test decision"><figcaption>A CI/CD (continuous integration and delivery) pipeline</figcaption></figure>
+</section>
+
+<section class="chapter">
+  <h3 style="margin-top:0">Data model (entity-relationship, or ER, diagram)</h3>
+  <p>Shows tables, their columns and how they relate. Each table lists its columns with a type and a key: <b>PK</b> (primary key, the row's unique ID), <b>FK</b> (foreign key, a link to another table) or <b>UK</b> (unique key). Each arrow says how many rows link, such as "1 to many."</p>
+  <figure><img src="images/er.png" width="2284" height="1338" alt="ER diagram of customers, addresses, orders, line items, products and categories"><figcaption>An e-commerce data model</figcaption></figure>
+
+  <h3 style="page-break-before: always; margin-top: 0">State machine</h3>
+  <p>Shows the states something can be in, and what moves it from one to the next. The dark dot is the start, and each end gets its own dot. A group of states can sit inside a box, and notes sit off to the side.</p>
+  <figure><img src="images/states.png" width="2284" height="1126" alt="State diagram of an order from draft to delivered or returned"><figcaption>An order's life, from draft to delivered or returned</figcaption></figure>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">05</span>Looks</p>
+  <h2>Card style and official icons</h2>
+  <p class="lede">Architecture boards use an icon for each service. Two options change how they look.</p>
+
+  <h3>Card style</h3>
+  <p>Ask for cards (<span class="prompt">"draw it with cards"</span>) to get each service as a white card with its icon, its provider and service, and its name. Each card and its two lines of text are grouped, so they drag as one piece.</p>
+  <figure><img src="images/cards.png" width="1671" height="796" alt="Rows of cards for AWS, Azure and Google Cloud services, joined by arrows"><figcaption>Card style with the official AWS, Azure and Google Cloud icons</figcaption></figure>
+
+  <h3>Official AWS, Azure and Google Cloud icons</h3>
+  <p>The official cloud icons belong to Amazon, Microsoft and Google, so the plugin doesn't ship them. Each person gets their own copy, under the vendor's terms. Ask <span class="prompt">"use the official AWS icons"</span> (or Azure, or Google Cloud), and Claude:</p>
+  <ol>
+    <li>Gives you the vendor's official icon page and asks you to read its terms.</li>
+    <li>Asks you to download the icon zip from that page yourself and hand Claude the file.</li>
+    <li>Converts the icons on your computer into <code>~/.deezle-tech-diagrams/icons</code>.</li>
+  </ol>
+  <p>Until you import a vendor's set, its services use open icons or plain shapes. Ask <span class="prompt">"which icons do I have?"</span> to check, or <span class="prompt">"remove the imported icons"</span> to undo it.</p>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">06</span>Infrastructure as code</p>
+  <h2>Diagrams from your cloud code</h2>
+  <p class="lede">Infrastructure as code (IaC) means describing cloud resources in files. Hand Claude a Terraform <code>.tf</code> file, a Pulumi program, a Bicep file or a CloudFormation template, and it draws what the file builds.</p>
+
+  <table>
+    <tr><th>In the file</th><th>On the board</th></tr>
+    <tr><td>Networks and groups</td><td>Sections for networks, subnets and resource groups. A section with nothing in it is skipped.</td></tr>
+    <tr><td>Services</td><td>Icons or cards for the things a person would point to: databases, functions, clusters, queues, buckets and load balancers.</td></tr>
+    <tr><td>References</td><td>Arrows that follow the way data or calls flow, so a queue points to the function that reads it.</td></tr>
+    <tr><td>Links</td><td>A resource that only links two others, such as a Lambda event source mapping, becomes one arrow instead of a box.</td></tr>
+    <tr><td>Settings</td><td>Left out: policies, security group rules, DNS (Domain Name System) records, bucket settings, and logging and monitoring setup. Ask for them if you want them drawn.</td></tr>
+  </table>
+
+  <figure><img src="images/iac.png" width="2232" height="718" alt="Board drawn from a Terraform file: a VPC with public and private subnets, a load balancer, an app, a database, a queue, a worker function, a bucket and a search service"><figcaption>Drawn from a sample Terraform file</figcaption></figure>
+
+  <p>Claude matches each resource to an icon by working out the product's name, even for resource types it has no example for. For instance, <code>aws_opensearch_domain</code> becomes Amazon OpenSearch Service.</p>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">07</span>Hands on</p>
+  <h2>Working with a board</h2>
+  <p class="lede">Everything Claude draws stays a normal board element. Move it, change it, or ask Claude to.</p>
+
+  <table>
+    <tr><th>To do this</th><th>Do this</th></tr>
+    <tr><td>Move a box</td><td>Drag it. Arrows stay attached, and a card drags with its text.</td></tr>
+    <tr><td>Add your own notes</td><td>Use the toolbar at the bottom of the board for text, sticky notes, shapes and drawing.</td></tr>
+    <tr><td>Change the diagram</td><td>Ask Claude: <span class="prompt">"Add a cache between the API and the database."</span> Claude reads the board fresh and changes only what you asked for.</td></tr>
+    <tr><td>Share it</td><td>Click <b>Share</b> at the top right. A new board is private until you share it.</td></tr>
+    <tr><td>Talk about it</td><td>Teammates can comment on the board, or click <b>Chat</b> to ask Claude about it.</td></tr>
+  </table>
+
+  <h3>What the board can't do</h3>
+  <ul>
+    <li><b>Automatic layout:</b> Claude places every box itself, with no layout engine. Boards up to about 25 boxes look clean.</li>
+    <li><b>Moving arrows:</b> board arrows don't animate. Dashed arrows mark async or optional flows instead.</li>
+    <li><b>Color gradients:</b> imported icons that used gradients show in one flat color, and a few icons the board can't draw are left out.</li>
+    <li><b>Icons everywhere:</b> imported icons are saved on your computer, so they last in Claude Code and Cowork. In a chat with no saved files, they last only for that chat.</li>
+  </ul>
+</section>
+
+<!-- ============ 08 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">08</span>Trust</p>
+  <h2>Privacy and safety</h2>
+  <p class="lede">The plugin is instructions and icons. It has no server and ships no code.</p>
+  <ul>
+    <li><b>It adds no outside service.</b> Your board is a Claude Whiteboard in your own Claude account, and it stays private until you share it.</li>
+    <li><b>It makes no network requests.</b> You download the official icons yourself, from each vendor's own page.</li>
+    <li><b>Imported icons stay with you.</b> They're saved in <code>~/.deezle-tech-diagrams/icons</code> on your computer. Ask Claude to remove them any time.</li>
+    <li><b>It needs no extra sign-in</b> beyond your Claude account.</li>
+  </ul>
+</section>
+
+<!-- ============ 09 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">09</span>Fixes</p>
+  <h2>Troubleshooting</h2>
+  <table>
+    <tr><th>Problem</th><th>Fix</th></tr>
+    <tr><td>Claude can't make a board</td><td>Whiteboards is off for your account. On Enterprise plans, an admin turns it on under Organization settings &gt; Artifacts. Until then, Claude gives you the Mermaid text instead.</td></tr>
+    <tr><td>The install fails</td><td>Check that you have Claude Code 2.1.275 or later, and access to the plugin's repository.</td></tr>
+    <tr><td>A plain icon or box</td><td>That vendor's icons aren't imported yet. Ask Claude to use the official icons, or name the service more exactly.</td></tr>
+    <tr><td>A crowded board</td><td>Ask Claude to split it across two boards, or to group related services.</td></tr>
+    <tr><td>Missing pieces</td><td>On a board drawn from IaC files, settings such as policies and log groups are left out on purpose. Ask Claude to draw them.</td></tr>
+  </table>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="chapter">
+  <p class="label"><span class="num">10</span>The fine print</p>
+  <h2>Icons, licenses and help</h2>
+
+  <h3>Icons</h3>
+  <p>The built-in icons are open source: plain cloud shapes, <b>Simple Icons</b> brand marks, <b>Lucide</b> category icons (compute, database, storage, network and more) and data-platform logos. Credits are in <code>ATTRIBUTION.md</code>. Imported vendor icons are your own copies, under each vendor's terms. The official icons in this manual's pictures were imported that way. All product names and icons are trademarks of their owners.</p>
+
+  <h3>License</h3>
+  <p>The plugin is free to use under the MIT License. The full text ships with the plugin in <code>LICENSE.md</code>.</p>
+
+  <h3>Get help</h3>
+  <p>Visit madewithdeezle.com.</p>
+
+  <div class="end">Deezle Tech Diagrams 0.2.1 · User manual · November 2026<br>© 2026 Made With Deezle. Claude is a trademark of Anthropic. AWS, Azure and Google Cloud are trademarks of their owners.</div>
+</section>
+
+</body>
+</html>

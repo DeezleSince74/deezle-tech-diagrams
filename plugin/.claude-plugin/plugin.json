@@ -1,0 +1,29 @@
+{
+  "name": "deezle-tech-diagrams",
+  "displayName": "Deezle Tech Diagrams",
+  "description": "Draw cloud architecture (Mermaid architecture-beta), data models (erDiagram), flowcharts and state machines on a Claude Whiteboard. Also reads Terraform, Pulumi, Bicep and CloudFormation exports. Ships open icons; an import skill converts the official AWS, Azure and Google Cloud icons you download from each vendor's own page. Skills only: no server, no code, no network requests.",
+  "version": "0.2.1",
+  "author": {
+    "name": "Derek Frempong"
+  },
+  "homepage": "https://github.com/DeezleSince74/deezle-tech-diagrams",
+  "repository": "https://github.com/DeezleSince74/deezle-tech-diagrams",
+  "icon": "./.claude-plugin/icon.png",
+  "documentationUrl": "https://github.com/DeezleSince74/deezle-tech-diagrams#readme",
+  "supportUrl": "https://github.com/DeezleSince74/deezle-tech-diagrams/issues",
+  "privacyPolicyUrl": "https://github.com/DeezleSince74/deezle-tech-diagrams/blob/main/plugin/PRIVACY.md",
+  "license": "MIT",
+  "keywords": [
+    "mermaid",
+    "diagram",
+    "whiteboard",
+    "architecture",
+    "flowchart",
+    "erd",
+    "state-machine",
+    "terraform",
+    "aws",
+    "azure",
+    "gcp"
+  ]
+}
