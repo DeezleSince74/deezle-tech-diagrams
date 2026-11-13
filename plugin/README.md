@@ -17,6 +17,9 @@ set of open icons stored as JSON (JavaScript Object Notation).
 
 ## Install
 
+**Now in Anthropic's plugin directory.** In Claude (web, desktop or mobile) or Cowork, open
+**Customize > Plugins** and add **Deezle Tech Diagrams**.
+
 In Claude Code 2.1.275 or later:
 
 ```
